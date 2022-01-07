@@ -3,8 +3,10 @@
 ## Módulo API
 Módulo de vendas para treinamento pessoal
 
-## Módulo API
-Módulo de acesso das aplicações da Universidade - UOL
+## Features
+- Api de login dá aplicação (web e apps)
+- Api para o registro de Usuários, Produtos, Pedidos e Clientes
+- Api para validação do token de acesso as aplicações(Pendente)
 
 ## Tecnologias utilizadas
 
