@@ -2,17 +2,28 @@ package io.github.felipe11dias.repository;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import io.github.felipe11dias.domain.entity.Cliente;
 
 @Repository
-public class Clientes {
+public interface Clientes extends JpaRepository<Cliente, Integer> {
+	
+	List<Cliente> findByNomeLike(String nome);
+	
+	void deleteByNome(String nome);
+	
+	boolean existsByNome(String nome);
+	
+	@Query(" select c from Cliente c left join fetch c.pedidos p where c.id = :id")
+	Cliente findClienteFecthPedidos(@Param("id") Integer id);
+	
+	/*
+	 * UTILIZANDO ENTITY MANAGER
+	 * 
 	
 	private static String INSERT = "insert into cliente (nome) values (?)";
 	private static String UPDATE = "update cliente set nome = ? where id = ?";
@@ -61,9 +72,8 @@ public class Clientes {
 		return entityManager.createQuery(" from Cliente" ,Cliente.class).getResultList();
 	}
 	
-	/*
-	 * UTILIZANDO JDBC TEMPLATE
-	 * 
+	* UTILIZANDO JDBC TEMPLATE
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
